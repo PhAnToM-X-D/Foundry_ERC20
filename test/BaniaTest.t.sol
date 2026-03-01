@@ -9,12 +9,11 @@ contract BANtest is Test {
     DeployBAN deployer;
     BaniaToken ban;
 
-    uint256 constant INITIAL_SUPPLY = 10000*1e18;
+    uint256 constant INITIAL_SUPPLY = 10000 * 1e18;
 
     address ALICE = makeAddr("alice");
-    address BOB   = makeAddr("bob");
+    address BOB = makeAddr("bob");
     address owner = address(msg.sender);
-
 
     function setUp() external {
         deployer = new DeployBAN(INITIAL_SUPPLY);
@@ -32,30 +31,30 @@ contract BANtest is Test {
     function test_InitialSupplyMintedToDeployerAndTransfer() external {
         uint256 amount = 25e18;
         vm.startPrank(owner);
-        ban.transfer(ALICE,50e18);
-        ban.transfer(BOB,50e18);
+        ban.transfer(ALICE, 50e18);
+        ban.transfer(BOB, 50e18);
         vm.stopPrank();
         vm.prank(ALICE);
-        ban.transfer(BOB,amount);
-        assertEq(ban.balanceOf(BOB),75e18);
+        ban.transfer(BOB, amount);
+        assertEq(ban.balanceOf(BOB), 75e18);
         assertEq(ban.balanceOf(ALICE), 25e18);
     }
 
     function testAllowancesStructure() external {
         uint256 amount = 25e18;
         vm.startPrank(owner);
-        ban.transfer(ALICE,50e18);
-        ban.transfer(BOB,50e18);
+        ban.transfer(ALICE, 50e18);
+        ban.transfer(BOB, 50e18);
         vm.stopPrank();
         vm.prank(ALICE);
         ban.approve(BOB, amount);
 
-        assertEq(ban.allowance(ALICE,BOB) , amount);
+        assertEq(ban.allowance(ALICE, BOB), amount);
         vm.prank(BOB);
-        ban.transferFrom(ALICE,BOB,10e18);
+        ban.transferFrom(ALICE, BOB, 10e18);
 
-        assertEq(ban.allowance(ALICE,BOB),15e18);
-        assertEq(ban.balanceOf(BOB),60e18);
+        assertEq(ban.allowance(ALICE, BOB), 15e18);
+        assertEq(ban.balanceOf(BOB), 60e18);
         assertEq(ban.balanceOf(ALICE), 40e18);
     }
 }
