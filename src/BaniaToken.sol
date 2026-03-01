@@ -6,5 +6,5 @@ import {ERC20} from "lib/openzepplin-contracts/contracts/token/ERC20/ERC20.sol";
 contract BaniaToken is ERC20 {
     constructor(uint256 _initialSupply) ERC20("Bania Token", "BAN") {
         _mint(msg.sender, _initialSupply ** decimals());
-    }  
+    }
 }
