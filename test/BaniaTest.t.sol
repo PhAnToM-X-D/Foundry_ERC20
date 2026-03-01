@@ -41,5 +41,21 @@ contract BANtest is Test {
         assertEq(ban.balanceOf(ALICE), 25e18);
     }
 
-    
+    function testAllowancesStructure() external {
+        uint256 amount = 25e18;
+        vm.startPrank(owner);
+        ban.transfer(ALICE,50e18);
+        ban.transfer(BOB,50e18);
+        vm.stopPrank();
+        vm.prank(ALICE);
+        ban.approve(BOB, amount);
+
+        assertEq(ban.allowance(ALICE,BOB) , amount);
+        vm.prank(BOB);
+        ban.transferFrom(ALICE,BOB,10e18);
+
+        assertEq(ban.allowance(ALICE,BOB),15e18);
+        assertEq(ban.balanceOf(BOB),60e18);
+        assertEq(ban.balanceOf(ALICE), 40e18);
+    }
 }
