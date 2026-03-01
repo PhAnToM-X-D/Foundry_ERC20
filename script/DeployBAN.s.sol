@@ -13,7 +13,7 @@ contract DeployBAN is Script {
 
     function run() external returns (BaniaToken) {
         vm.startBroadcast();
-        BaniaToken ban = new BaniaToken(i_init);
+        BaniaToken ban = new BaniaToken("Bania Token", "BAN", i_init);
         vm.stopBroadcast();
         return ban;
     }
